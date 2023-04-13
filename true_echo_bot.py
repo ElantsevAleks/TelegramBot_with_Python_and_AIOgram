@@ -21,6 +21,9 @@ async def process_start_command(message: Message):
 # Этот хэндлер будет срабатывать на команду "/help"
 @dp.message(Command(commands=["help"]))
 async def process_help_command(message: Message):
+    # Запоминаем тех, кто просит о помощи
+    with open('help.log', 'a') as h:
+        print(message.json(exclude_none=True), file=h)
     await message.answer('Скажи мне, кто твой друг '
                          'и я скажу тебе кто ты...')
 
@@ -30,6 +33,9 @@ async def process_help_command(message: Message):
 @dp.message()
 async def send_echo(message: Message):
     try:
+        # Логгируем все сообщения
+        with open('cash.log', 'a') as cash:
+            print(message.json(exclude_none=True), file=cash)
         await message.send_copy(chat_id=message.chat.id)
     except TypeError:
         await message.reply(text='Данный тип апдейтов не поддерживается '
