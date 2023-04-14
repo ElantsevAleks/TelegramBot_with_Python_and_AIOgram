@@ -1,0 +1,10 @@
+!echo_bot
+
+start - Услышать зов кроличьей норы
+help - Съешь меня
+
+!guess_the_number_bot
+
+start - Запустить игру
+help - Как играть
+cancel - Остановить игру
