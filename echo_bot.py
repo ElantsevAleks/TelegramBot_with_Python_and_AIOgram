@@ -1,6 +1,6 @@
 import secret
 from aiogram import Bot, Dispatcher, F
-from aiogram.filters import Command
+from aiogram.filters import Command, Text
 from aiogram.types import Message
 
 # Вместо BOT TOKEN HERE нужно вставить токен вашего бота,
@@ -23,6 +23,12 @@ async def process_help_command(message: Message):
                          'и я скажу тебе кто ты...')
 
 
+# Этот хэндлер будет срабатывать на пасхальный текст,
+# причем регистр букв будет игнорироваться
+# @dp.message(Text(startswith=['кто твой друг'], ignore_case=True))
+async def process_text_startswith_egg(message: Message):
+    await message.answer(text='Кто ты!')
+
 # Этот хэндлер будет срабатывать на отправку боту фото
 async def send_photo_echo(message: Message):
     await message.answer_photo(message.photo[0].file_id)
@@ -42,6 +48,7 @@ async def send_echo(message: Message):
 # Регистрируем хэндлеры
 dp.message.register(process_start_command, Command(commands=["start"]))
 dp.message.register(process_help_command, Command(commands=['help']))
+dp.message.register(process_text_startswith_egg, Text(startswith=['кто твой друг'], ignore_case=True))
 dp.message.register(send_photo_echo, F.photo)
 dp.message.register(send_sticker_echo, F.sticker)
 dp.message.register(send_echo)
